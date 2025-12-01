@@ -113,23 +113,259 @@ main.py
 - ✅ **Agregar procesos manualmente**: Creación de procesos personalizados
 - ✅ **Generación automática**: Crea procesos de prueba predefinidos
 - ✅ **Control de simulación**: Iniciar, pausar y reiniciar la simulación
+- ✅ **Tema visual moderno**: Interfaz con tema oscuro futurista
+- ✅ **Hover informativo**: Información detallada al pasar el mouse sobre memoria
+- ✅ **Actualización en tiempo real**: Interfaz se actualiza cada 200ms durante la simulación
 
 ### 2.6 Funcionalidades Adicionales
-- ✅ **Tema visual moderno**: Interfaz con tema oscuro futurista
 - ✅ **Colores por proceso**: Cada proceso tiene un color único para identificación
-- ✅ **Hover informativo**: Información detallada al pasar el mouse sobre memoria
 - ✅ **Reinicio del sistema**: Capacidad de reiniciar completamente el simulador
+- ✅ **Manejo de errores**: Validación de entradas y mensajes informativos
+- ✅ **Interfaz responsiva**: Componentes que se adaptan al contenido
 
 ---
 
-## 3. DEMOSTRACIÓN DEL MÓDULO DESARROLLADO
+## 3. DESARROLLO DE LA INTERFAZ GRÁFICA
 
-### 3.1 Módulo Principal: Simulador Completo de Sistema Operativo
+### 3.1 Arquitectura de la Interfaz
+
+La interfaz gráfica del simulador está implementada utilizando **Tkinter** con un enfoque orientado a objetos. La clase principal `SimuladorApp` gestiona todos los componentes visuales y la comunicación con el coordinador del sistema operativo.
+
+**Estructura de la Interfaz:**
+- **Ventana principal**: 1400x950 píxeles con tema oscuro futurista
+- **Layout modular**: Componentes organizados en paneles independientes
+- **Actualización dinámica**: Bucle de simulación que actualiza la UI cada 200ms
+- **Comunicación bidireccional**: La interfaz envía comandos y recibe actualizaciones del coordinador
+
+### 3.2 Componentes Principales
+
+#### **3.2.1 Panel de Configuración**
+Ubicado en el lado izquierdo de la ventana, permite configurar todos los parámetros del sistema:
+
+- **Configuración de Memoria**:
+  - Campo para establecer el tamaño total de RAM (en KB)
+  - Botón para aplicar cambios (reinicia el sistema)
+  - Validación de entrada para valores positivos
+
+- **Algoritmo de Planificación**:
+  - ComboBox con 4 opciones: Round Robin, FCFS, SJF, Prioridad
+  - Cambio dinámico durante la ejecución
+  - Habilitación/deshabilitación automática del campo quantum según el algoritmo
+
+- **Configuración de Quantum**:
+  - Campo numérico para establecer el quantum (solo para Round Robin)
+  - Botón de confirmación para aplicar cambios
+  - Se deshabilita automáticamente para algoritmos que no lo requieren
+
+- **Estrategia de Asignación de Memoria**:
+  - ComboBox con 3 opciones: First Fit, Best Fit, Worst Fit
+  - Cambio dinámico que afecta la asignación de nuevos procesos
+
+- **Botones de Acción**:
+  - **Agregar Proceso Manual**: Abre ventana modal para crear procesos personalizados
+  - **Generar Test Automático**: Crea 4 procesos de prueba predefinidos
+  - **Iniciar/Pausar Simulación**: Control principal de la ejecución
+
+#### **3.2.2 Tabla de Procesos**
+Muestra el estado actual de todos los procesos en el sistema:
+
+- **Columnas**:
+  - PID: Identificador único del proceso
+  - Estado: Estado actual con iconos visuales (🆕 NUEVO, ✅ LISTO, ⚡ EJECUCION, ⏸️ BLOQUEADO, ✔️ TERMINADO)
+  - Burst: Tiempo de ejecución restante
+  - Size: Tamaño del proceso en KB
+  - Prio: Prioridad del proceso
+
+- **Características**:
+  - Actualización en tiempo real durante la simulación
+  - Ordenamiento automático por PID
+  - Scrollbar para manejar muchos procesos
+  - Resaltado visual del proceso en ejecución
+
+#### **3.2.3 Visualización de Memoria**
+Representación gráfica del mapa de memoria:
+
+- **Representación Visual**:
+  - Cada bloque de memoria se muestra como un rectángulo proporcional
+  - Bloques ocupados tienen colores únicos por proceso
+  - Bloques libres se muestran en gris
+  - El proceso en ejecución se resalta con color dorado y borde brillante
+  - Etiquetas muestran PID y tamaño de cada bloque
+
+- **Funcionalidad de Hover**:
+  - Al pasar el mouse sobre un bloque, se muestra información detallada:
+    - Estado (LIBRE, OCUPADO, EJECUTANDO)
+    - PID del proceso (si está ocupado)
+    - Tamaño del bloque en KB
+    - Dirección de inicio en memoria
+  - El label inferior muestra esta información en tiempo real
+
+- **Características Técnicas**:
+  - Escalado automático según el tamaño total de memoria
+  - Actualización dinámica cuando cambia el tamaño de memoria
+  - Visualización de direcciones de memoria en el lado izquierdo
+
+#### **3.2.4 Gráfico de Gantt**
+Línea de tiempo que muestra el historial de uso de CPU:
+
+- **Visualización**:
+  - Cada segmento representa un período de ejecución de un proceso
+  - Colores corresponden a los procesos (mismo color que en memoria)
+  - El proceso actual se resalta con color dorado
+  - Muestra los últimos 60 ticks de ejecución
+
+- **Características**:
+  - Escalado automático según el ancho disponible
+  - Etiquetas con PID en segmentos grandes
+  - Botón para limpiar el historial
+  - Actualización continua durante la simulación
+
+#### **3.2.5 Log de Eventos**
+Registro textual de todas las operaciones del sistema:
+
+- **Funcionalidades**:
+  - Muestra todos los eventos con timestamp (HH:MM:SS)
+  - Scroll automático al final del log
+  - Límite de 200 líneas (elimina las más antiguas automáticamente)
+  - Fuente monospace (Consolas) para mejor legibilidad
+  - Scrollbar vertical para navegar el historial
+
+- **Tipos de Eventos Registrados**:
+  - Carga de procesos a memoria
+  - Cambios de estado de procesos
+  - Asignación y liberación de memoria
+  - Cambios de algoritmo de planificación
+  - Terminación de procesos
+  - Bloqueos y retornos de I/O
+  - Reinicios del sistema
+
+### 3.3 Ventana de Agregar Proceso Manual
+
+Ventana modal que permite crear procesos personalizados:
+
+- **Campos de Entrada**:
+  - **Tamaño (KB)**: Tamaño del proceso en kilobytes
+  - **Tiempo de Ejecución (Seg)**: Duración total del proceso
+  - **Prioridad**: Nivel de prioridad (número entero)
+
+- **Validación**:
+  - Verifica que todos los valores sean numéricos
+  - Valida que los valores sean mayores a 0
+  - Muestra mensaje de confirmación antes de crear
+
+- **Diseño**:
+  - Ventana modal no redimensionable (380x400)
+  - Tema consistente con la ventana principal
+  - Botones de confirmar y cancelar
+
+### 3.4 Sistema de Estilos y Temas
+
+La interfaz utiliza un **tema oscuro futurista** con los siguientes elementos:
+
+- **Colores Principales**:
+  - Fondo principal: Tonos oscuros (#1a2332, #2a3441)
+  - Texto: Blanco y dorado para resaltar
+  - Proceso en ejecución: Dorado brillante (#FFD700)
+  - Bordes: Dorado para elementos importantes
+
+- **Estilos Tkinter**:
+  - Configuración personalizada de ttk.Style
+  - Estilos para botones, labels, combobox, treeview
+  - Efectos hover en botones
+  - Botones de acción con estilo especial (Action.TButton)
+
+- **Tipografía**:
+  - Segoe UI para texto general
+  - Consolas para el log (monospace)
+  - Tamaños variables según importancia
+
+### 3.5 Flujo de Actualización
+
+El sistema utiliza un bucle de simulación asíncrono:
+
+1. **Usuario inicia simulación** → `toggle()` cambia el estado
+2. **Bucle principal** → `loop()` se ejecuta cada 200ms:
+   - Llama a `coordinador.ejecutar_ciclo()` para ejecutar un tick
+   - Recibe mensajes de log y los muestra
+   - Actualiza la tabla de procesos (`update_ui()`)
+   - Redibuja la memoria (`draw_mem()`)
+   - Redibuja el gráfico de Gantt (`draw_gantt()`)
+   - Programa la siguiente iteración con `root.after(200, self.loop)`
+
+3. **Actualización de Componentes**:
+   - Tabla: Se limpia y se vuelve a poblar con procesos actuales
+   - Memoria: Se recalcula el mapa y se redibuja completamente
+   - Gantt: Se actualiza con los últimos 60 ticks
+   - Log: Se agregan nuevos mensajes al final
+
+### 3.6 Funcionalidades Interactivas
+
+- **Cambio Dinámico de Configuración**:
+  - Los cambios en algoritmo, quantum y estrategia de memoria se aplican inmediatamente
+  - El cambio de tamaño de memoria reinicia todo el sistema
+  - Los procesos existentes se mantienen al cambiar algoritmos
+
+- **Generación de Test Automático**:
+  - Crea 4 procesos predefinidos con diferentes características:
+    - Proceso 1: 100 KB, 20 seg, prioridad 5
+    - Proceso 2: 100 KB, 5 seg, prioridad 1
+    - Proceso 3: 100 KB, 10 seg, prioridad 3
+    - Proceso 4: 100 KB, 2 seg, prioridad 4
+
+- **Control de Simulación**:
+  - Botón que alterna entre "INICIAR" y "PAUSAR"
+  - Al pausar, el sistema mantiene su estado actual
+  - Al reiniciar, continúa desde donde se pausó
+
+### 3.7 Integración con el Coordinador
+
+La interfaz actúa como capa de presentación sobre el coordinador:
+
+- **Comunicación**:
+  - La interfaz envía comandos al coordinador (agregar proceso, cambiar configuración)
+  - El coordinador ejecuta la lógica y retorna mensajes de log
+  - La interfaz consulta el estado actual para actualizar visualizaciones
+
+- **Métodos de Interacción**:
+  - `coordinador.agregar_proceso()`: Crea nuevos procesos
+  - `coordinador.ejecutar_ciclo()`: Ejecuta un ciclo de simulación
+  - `coordinador.cambiar_algoritmo()`: Cambia el algoritmo de planificación
+  - `coordinador.cambiar_quantum()`: Ajusta el quantum
+  - `coordinador.cambiar_estrategia_memoria()`: Cambia la estrategia de memoria
+  - `coordinador.reiniciar_memoria()`: Reinicia el sistema con nuevo tamaño
+
+### 3.8 Avances y Características Destacadas
+
+**Avances Implementados:**
+- ✅ Interfaz gráfica completa y funcional
+- ✅ Visualización en tiempo real de todos los componentes
+- ✅ Tema visual moderno y profesional
+- ✅ Interactividad completa con el usuario
+- ✅ Validación de entradas y manejo de errores
+- ✅ Ventanas modales para operaciones específicas
+- ✅ Sistema de log completo para seguimiento
+- ✅ Hover informativo en visualización de memoria
+- ✅ Gráfico de Gantt dinámico
+- ✅ Control total de la simulación
+
+**Mejoras de Usabilidad:**
+- Iconos visuales para estados de procesos
+- Colores únicos por proceso para fácil identificación
+- Resaltado del proceso en ejecución en múltiples componentes
+- Información contextual al pasar el mouse
+- Mensajes de confirmación para operaciones importantes
+- Scroll automático en el log de eventos
+
+---
+
+## 4. DEMOSTRACIÓN DEL MÓDULO DESARROLLADO
+
+### 4.1 Módulo Principal: Simulador Completo de Sistema Operativo
 
 **Descripción general:**
 Se desarrolló un **simulador completo de sistema operativo** que integra todos los componentes esenciales: gestión de procesos, gestión de memoria, planificación de CPU y visualización en tiempo real.
 
-### 3.2 Funcionamiento del Sistema
+### 4.2 Funcionamiento del Sistema
 
 #### **Entradas:**
 - **Configuración inicial**:
@@ -166,7 +402,7 @@ Se desarrolló un **simulador completo de sistema operativo** que integra todos 
   - Tiempo restante de ejecución
   - Prioridad y tamaño de cada proceso
 
-### 3.3 Comportamiento Esperado
+### 4.3 Comportamiento Esperado
 
 **Ciclo de vida de un proceso:**
 1. **Creación**: El proceso se crea y entra en estado NUEVO
@@ -186,7 +422,7 @@ Se desarrolló un **simulador completo de sistema operativo** que integra todos 
 - Gestiona fragmentación de memoria automáticamente
 - Registra todos los eventos para análisis posterior
 
-### 3.4 Pasos para la Demostración
+### 4.4 Pasos para la Demostración
 
 #### **Paso 1: Inicio del Sistema**
 - Ejecutar `python main.py`
@@ -258,7 +494,7 @@ Se desarrolló un **simulador completo de sistema operativo** que integra todos 
 
 ---
 
-## 4. RESUMEN EJECUTIVO
+## 5. RESUMEN EJECUTIVO
 
 ### Características Destacadas:
 - ✅ **Arquitectura modular** bien estructurada y mantenible
