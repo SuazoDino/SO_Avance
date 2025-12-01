@@ -1,0 +1,42 @@
+===========================================
+📄 ARCHIVO WORD DISPONIBLE PARA DESCARGAR
+===========================================
+
+El archivo Word con la documentación completa está disponible:
+
+📁 Nombre del archivo: PRESENTACION_PROYECTO.docx
+📁 Ubicación: /workspace/PRESENTACION_PROYECTO.docx
+📊 Tamaño: 43.75 KB
+
+===========================================
+INSTRUCCIONES PARA DESCARGAR:
+===========================================
+
+OPCIÓN 1 - Desde el Explorador de Archivos:
+1. Abre el panel de archivos a la izquierda (Explorer)
+2. Busca "PRESENTACION_PROYECTO.docx" en la lista
+3. Haz clic derecho → "Download" o "Save As"
+
+OPCIÓN 2 - Búsqueda de Archivos:
+1. Presiona Ctrl+P (o Cmd+P en Mac)
+2. Escribe: PRESENTACION_PROYECTO.docx
+3. Abre el archivo y guárdalo
+
+OPCIÓN 3 - Terminal:
+Si tienes acceso a la terminal, puedes copiarlo con:
+  cp PRESENTACION_PROYECTO.docx ~/Downloads/
+
+===========================================
+CONTENIDO DEL DOCUMENTO:
+===========================================
+
+✅ Explicación de la Arquitectura
+✅ Requerimientos Atendidos
+✅ Desarrollo de la Interfaz Gráfica (COMPLETO)
+✅ Demostración del Módulo Desarrollado
+✅ Resumen Ejecutivo
+
+El documento incluye toda la documentación del proyecto,
+incluyendo la nueva sección sobre el desarrollo de la interfaz.
+
+===========================================

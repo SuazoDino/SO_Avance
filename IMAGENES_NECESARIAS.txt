@@ -1,0 +1,139 @@
+===========================================
+📸 IMÁGENES NECESARIAS PARA EL DOCUMENTO WORD
+===========================================
+
+Total: 10 imágenes en formato PNG
+
+===========================================
+LISTA DE IMÁGENES:
+===========================================
+
+1. imagen_01_interfaz_completa.png
+   📋 Descripción: Vista completa de la interfaz mostrando todos los paneles
+   📝 Cómo capturar:
+      - Ejecutar: python main.py
+      - Capturar toda la ventana mostrando:
+        * Panel de configuración (izquierda)
+        * Tabla de procesos (centro)
+        * Memoria (derecha)
+        * Gráfico de Gantt (abajo)
+        * Log de eventos (abajo)
+
+2. imagen_02_panel_configuracion.png
+   📋 Descripción: Panel de configuración detallado
+   📝 Cómo capturar:
+      - Zoom al panel izquierdo
+      - Mostrar todos los controles:
+        * Campo de memoria total
+        * ComboBox de algoritmo
+        * Campo de quantum
+        * ComboBox de estrategia
+        * Botones de acción
+
+3. imagen_03_tabla_procesos.png
+   📋 Descripción: Tabla de procesos con varios procesos
+   📝 Cómo capturar:
+      - Crear varios procesos (usar test automático)
+      - Capturar la tabla mostrando procesos en diferentes estados:
+        * Al menos uno en NUEVO
+        * Al menos uno en LISTO
+        * Al menos uno en EJECUCION
+        * Si es posible, uno en BLOQUEADO
+
+4. imagen_04_memoria_ocupada.png
+   📋 Descripción: Memoria con procesos asignados
+   📝 Cómo capturar:
+      - Con varios procesos cargados en memoria
+      - Mostrar bloques de diferentes colores
+      - Mostrar bloques libres en gris
+      - Mostrar etiquetas con PID
+
+5. imagen_05_proceso_ejecutando.png
+   📋 Descripción: Memoria mostrando proceso en ejecución (dorado)
+   📝 Cómo capturar:
+      - Cuando hay un proceso ejecutándose
+      - El proceso debe tener resaltado DORADO BRILLANTE
+      - Debe verse claramente el borde brillante
+      - Mostrar el icono ⚡ en la etiqueta
+
+6. imagen_06_gantt_ejecutando.png
+   📋 Descripción: Gráfico de Gantt con historial
+   📝 Cómo capturar:
+      - Después de varios ticks de ejecución
+      - Mostrar diferentes colores por proceso
+      - Mostrar el segmento actual en dorado
+      - Debe verse el historial de ejecución
+
+7. imagen_07_log_eventos.png
+   📋 Descripción: Log de eventos con mensajes
+   📝 Cómo capturar:
+      - Con varios eventos registrados
+      - Mostrar timestamps (HH:MM:SS)
+      - Mostrar diferentes tipos de mensajes:
+        * Carga de procesos
+        * Cambios de estado
+        * Asignación de memoria
+        * Terminación de procesos
+
+8. imagen_08_ventana_agregar_proceso.png
+   📋 Descripción: Ventana modal para agregar proceso
+   📝 Cómo capturar:
+      - Hacer clic en "Agregar Proceso Manual"
+      - Capturar la ventana modal completa
+      - Mostrar los tres campos:
+        * Tamaño (KB)
+        * Tiempo de Ejecución (Seg)
+        * Prioridad
+      - Mostrar botones de confirmar y cancelar
+
+9. imagen_09_hover_memoria.png
+   📋 Descripción: Hover informativo sobre memoria
+   📝 Cómo capturar:
+      - Pasar el mouse sobre un bloque de memoria
+      - Capturar cuando se muestra la información en el label inferior
+      - Debe verse: estado, PID, tamaño, dirección
+      - El label debe estar visible en la captura
+
+10. imagen_10_comparacion_algoritmos.png
+    📋 Descripción: Comparación de algoritmos
+    📝 Cómo capturar:
+       - Opción A: Dos capturas lado a lado
+       - Opción B: Una captura con Round Robin y luego cambiar a SJF
+       - Mostrar diferencias en el orden de ejecución
+       - Mostrar cómo cambia el Gantt
+
+===========================================
+INSTRUCCIONES GENERALES:
+===========================================
+
+1. Formato: PNG (mejor calidad)
+2. Resolución: Mínimo 1920x1080 o similar
+3. Nombre: Usar exactamente los nombres indicados
+4. Calidad: Las imágenes deben ser claras y legibles
+5. Contenido: Asegurarse de que todos los elementos sean visibles
+
+===========================================
+PASOS PARA CAPTURAR:
+===========================================
+
+1. Ejecutar: python main.py
+2. Configurar parámetros iniciales
+3. Crear procesos (test automático o manual)
+4. Iniciar simulación
+5. Usar herramienta de captura:
+   - Windows: Snipping Tool, Print Screen
+   - Linux: Screenshot, gnome-screenshot
+   - Mac: Cmd+Shift+4
+6. Guardar con los nombres exactos indicados
+7. Insertar en el documento Word en las secciones correspondientes
+
+===========================================
+UBICACIÓN EN EL DOCUMENTO:
+===========================================
+
+Las imágenes deben insertarse en:
+- Sección 6.2: Descripción de Componentes (junto a cada componente)
+- Sección 6.3: Operaciones Básicas (ilustrar los pasos)
+- Sección 6.4: Interpretación (ayudar a entender la visualización)
+
+===========================================

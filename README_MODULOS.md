@@ -140,18 +140,93 @@ Este documento explica la estructura modular del simulador del sistema operativo
 ---
 
 ### 🖥️ `interfaz.py` - Módulo de Interfaz Gráfica
-**Propósito**: Interfaz gráfica del simulador.
+**Propósito**: Interfaz gráfica completa del simulador con visualización en tiempo real.
 
 **Clase Principal**: `SimuladorApp`
 
-**Componentes**:
-- Panel de configuración
-- Tabla de procesos
-- Visualización de memoria
-- Gráfico de Gantt
-- Log de eventos
+**Componentes Principales**:
 
-**Uso en la exposición**: Mostrar visualmente el funcionamiento del sistema.
+1. **Panel de Configuración** (`crear_panel_configuracion`):
+   - Configuración de tamaño de memoria total (KB)
+   - Selección de algoritmo de planificación (Round Robin, FCFS, SJF, Prioridad)
+   - Configuración de quantum (para Round Robin)
+   - Selección de estrategia de asignación de memoria (First Fit, Best Fit, Worst Fit)
+   - Botones para agregar proceso manual, generar test automático, iniciar/pausar simulación
+
+2. **Tabla de Procesos** (`crear_tabla_procesos`):
+   - Muestra todos los procesos con sus estados actuales
+   - Columnas: PID, Estado (con iconos), Burst restante, Tamaño, Prioridad
+   - Actualización en tiempo real durante la simulación
+   - Scrollbar para manejar muchos procesos
+
+3. **Visualización de Memoria** (`crear_visualizacion_memoria`, `draw_mem`):
+   - Representación gráfica del mapa de memoria
+   - Bloques de memoria con colores únicos por proceso
+   - Resaltado especial del proceso en ejecución (dorado)
+   - Hover informativo que muestra detalles al pasar el mouse
+   - Etiquetas con PID, tamaño y dirección de inicio
+
+4. **Gráfico de Gantt** (`crear_grafico_gantt`, `draw_gantt`):
+   - Línea de tiempo de uso de CPU
+   - Muestra los últimos 60 ticks de ejecución
+   - Colores corresponden a los procesos
+   - Resaltado del proceso actual
+   - Botón para limpiar el historial
+
+5. **Log de Eventos** (`crear_log_eventos`, `log`):
+   - Registro textual de todas las operaciones
+   - Timestamps en formato HH:MM:SS
+   - Scroll automático al final
+   - Límite de 200 líneas con eliminación automática de las más antiguas
+
+**Funcionalidades Adicionales**:
+
+- **Ventana de Agregar Proceso Manual** (`popup_manual`):
+  - Ventana modal para crear procesos personalizados
+  - Campos: Tamaño (KB), Tiempo de ejecución (seg), Prioridad
+  - Validación de entradas
+  - Confirmación antes de crear
+
+- **Generación de Test Automático** (`generar_test`):
+  - Crea 4 procesos de prueba predefinidos
+  - Útil para demostraciones rápidas
+
+- **Control de Simulación** (`toggle`, `loop`):
+  - Iniciar/pausar la simulación
+  - Bucle de actualización cada 200ms
+  - Actualización dinámica de todos los componentes
+
+- **Sistema de Estilos** (`configurar_estilos`):
+  - Tema oscuro futurista
+  - Colores personalizados para todos los componentes
+  - Estilos ttk personalizados
+  - Efectos hover en botones
+
+**Métodos Clave**:
+- `update_ui()`: Actualiza la tabla de procesos con el estado actual
+- `draw_mem()`: Redibuja la visualización de memoria
+- `draw_gantt()`: Redibuja el gráfico de Gantt
+- `log()`: Agrega mensajes al log de eventos
+- `on_hover_mem()`: Maneja el hover sobre bloques de memoria
+- `cambiar_tamano_memoria()`: Cambia el tamaño de memoria y reinicia el sistema
+- `al_cambiar_algoritmo()`: Cambia el algoritmo de planificación
+- `set_quantum()`: Establece el quantum para Round Robin
+- `set_mem()`: Cambia la estrategia de asignación de memoria
+
+**Integración con el Coordinador**:
+- La interfaz se comunica con `CoordinadorSO` para:
+  - Agregar procesos (`coordinador.agregar_proceso()`)
+  - Ejecutar ciclos (`coordinador.ejecutar_ciclo()`)
+  - Cambiar configuración (algoritmo, quantum, estrategia de memoria)
+  - Reiniciar memoria (`coordinador.reiniciar_memoria()`)
+  - Consultar estado actual de procesos y memoria
+
+**Uso en la exposición**: 
+- Mostrar visualmente el funcionamiento del sistema en tiempo real
+- Demostrar cómo los procesos cambian de estado
+- Visualizar la asignación de memoria
+- Mostrar la línea de tiempo de ejecución (Gantt)
+- Explicar los diferentes algoritmos de planificación mediante la interfaz
 
 ---
 
