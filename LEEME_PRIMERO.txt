@@ -1,0 +1,11 @@
+ARCHIVO WORD LISTO PARA DESCARGAR
+
+El archivo está en: /workspace/PRESENTACION_PROYECTO.docx
+
+Para descargarlo RÁPIDO:
+1. Mira a la IZQUIERDA en el panel de archivos
+2. Busca "PRESENTACION_PROYECTO.docx" 
+3. Clic derecho → Download
+
+Si no lo ves, el archivo existe y está listo.
+Puedes pedirle a alguien que te lo envíe o usar git para descargarlo.
